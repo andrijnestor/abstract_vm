@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:51:46 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/29 21:23:58 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/30 18:25:29 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <iomanip>
 # include "COperand.hpp"
 # include <tgmath.h>
+# include "VmExceptions.hpp"
 
 template <typename T>
 class							Operand : public IOperand
@@ -87,7 +88,7 @@ class							Operand : public IOperand
 		IOperand const			*operator/(IOperand const & rhs) const
 		{
 			if (std::stod(rhs.toString()) == 0)
-				throw std::runtime_error("Div by zero");
+				throw (VmExceptions::DivZero());
 			std::string sum =
 				std::to_string(this->_value / std::stod(rhs.toString()));
 			eOperandType type =
@@ -97,7 +98,7 @@ class							Operand : public IOperand
 		IOperand const			*operator%(IOperand const & rhs) const
 		{
 			if (std::stod(rhs.toString()) == 0)
-				throw std::runtime_error("Mod by zero");
+				throw (VmExceptions::ModZero());
 			std::string sum =
 				std::to_string(std::fmod(this->_value, std::stod(rhs.toString())));
 			eOperandType type =
@@ -119,9 +120,9 @@ class							Operand : public IOperand
 		void					checkOverflowUnderflow(double value)
 		{
 			if (value > std::numeric_limits<T>::max())
-				throw std::runtime_error("Overflow");
+				throw (VmExceptions::Owerflow());
 			if (value < std::numeric_limits<T>::min())
-				throw std::runtime_error("Underflow");		
+				throw (VmExceptions::Underflow());
 		}
 
 	private:

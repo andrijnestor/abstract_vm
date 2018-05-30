@@ -6,7 +6,7 @@
 #    By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/26 15:41:19 by anestor           #+#    #+#              #
-#    Updated: 2018/05/29 19:28:16 by anestor          ###   ########.fr        #
+#    Updated: 2018/05/30 21:28:47 by anestor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ DEPS = $(patsubst %,$(HEADER)/%,$(_DEPS))
 SOURCES =   main.cpp \
 			Machine.cpp \
 			COperand.cpp \
+			VmExceptions.cpp \
+			Lexer.cpp \
 #			Int8.cpp \
 
 
