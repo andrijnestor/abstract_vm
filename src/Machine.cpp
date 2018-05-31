@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 16:33:18 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/30 22:51:29 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 03:07:59 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ void			Machine::dumpStack(void)
 
 	Lexer	a;
 
-	a.lexicalAnalysis("pop    dssd( 123.123   ) ;1231");
+	a.lexicalAnalysis("pop    Int8( 123.123   )) ;1231");
 }

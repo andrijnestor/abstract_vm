@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 21:21:58 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/30 22:51:26 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 03:09:05 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 Lexer::Lexer(void)
 {
-	this->_regex.assign(R"(^\s*\S+((\s*|\s+;.*)$|\s+\S+\(\s*\S*\s*\)(\s*|\s+;.*)$)|^;.*$)");
+	this->_regex.assign(R"(^\s*\S+((\s*|\s+;.*)$|\s+\S+\(.*)(\s*|\s+;.*)$)|^;.*$)");
 }
 
 Lexer::~Lexer(void) {}
@@ -47,8 +47,12 @@ std::vector<Tokens>	Lexer::lexicalAnalysis(std::string const & file)
 
 
 
-    std::regex words_regex("[^\\s()]+");
-    auto words_begin =
+//   std::regex words_regex("[^\\s]+");
+   
+    std::regex words_regex(R"([(]+.*[)]+)");
+
+   // std::regex words_regex(R"([^ ]+)");
+   	auto words_begin =
         std::sregex_iterator(file.begin(), file.end(), words_regex);
     auto words_end = std::sregex_iterator();
 
@@ -61,5 +65,20 @@ std::vector<Tokens>	Lexer::lexicalAnalysis(std::string const & file)
         std::string match_str = match.str();
         std::cout << match_str << '\n';
     }
+	
+	std::smatch	m;
+	std::regex_search(file, m, std::regex(R"(\(.*\))"));
+	std::string	test = m.str().substr(1, m.str().size() - 2);
+	std::cout << "supertest: " << test << std::endl;
+
+
+	std::regex_search(file, m, std::regex(R"(^\s*\S+\s*)"));
+	test = m.str().substr(0, m.str().size());
+	std::cout << "supertest: " << test << std::endl;
+
+	std::regex_search(file, m, std::regex(R"(\s\S+[(])"));
+	test = m.str().substr(1, m.str().size() - 2);
+	std::cout << "supertest: " << test << std::endl;
+
 	return (vector);
 }
