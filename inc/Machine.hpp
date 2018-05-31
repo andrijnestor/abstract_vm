@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 15:42:37 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/31 17:50:02 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 20:26:57 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,9 @@
 # include <fstream>
 # include "Operand.hpp"
 # include "Lexer.hpp"
+# include "Parser.hpp"
 # include "VmExceptions.hpp"
-/*
-struct									Tokens
-{
-	int									line;
-	std::string							inst;
-	std::string							type;
-	std::string							value;
-	bool								lexical;  //if wrong n of tokens or different random cymbols
-};
-*/
+
 class									Machine
 {
 	public:
@@ -35,42 +27,20 @@ class									Machine
 		Machine(Machine const & src);
 		~Machine(void);
 		Machine							&operator=(Machine const & src);
-		void							parseInput(std::string line);   //del me
-		void							dumpStack(void);  //in parser?
-//		void							compute(std::string file);
+		void							parseInput(void);   //del me
+		void							dumpStack(void);
+		void							dumpTokens(void);
 
 	private:
 		std::vector<Tokens>				_data;
-		std::vector<const IOperand *>	_stack;   //ioperland
+		std::vector<const IOperand *>	_stack;
 		Lexer							_lexer;
-	//	void							_stdinLexer(void);
+		Parser							_parser;
+		COperand						_creator;
+		void							_stdinLexer(void);
 		void							_fileLexer(std::string const & file);
+		void							_tokensParser(void);
 
 };
 
 #endif
-
-/*
-struct								StackStruct
-{
-    enum
-	{
-									Int8,
-									Int16,
-									Int32,
-									Float,
-									Double
-	}								type;
-   
-	eOperlandType					type;
-   	union
-    {
-        int8_t						e;
-        int16_t						s;
-		int32_t						t;
-		float						f;
-        double						d;
-    };
-};
-
-*/

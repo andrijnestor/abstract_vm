@@ -6,13 +6,15 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:18:58 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/30 18:26:53 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 20:44:54 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VMEXCEPTIONS_HPP
 # define VMEXCEPTIONS_HPP
 # include <exception>
+# include <cstring>
+# include <cerrno>
 
 class						VmExceptions : public std::exception
 {
@@ -89,6 +91,12 @@ class						VmExceptions : public std::exception
 		{
 			public:
 				virtual ~WrongValueType(void) throw();
+				virtual const char	*what() const throw();
+		};
+		class				WrongFile : public std::exception
+		{
+			public:
+				virtual ~WrongFile(void) throw();
 				virtual const char	*what() const throw();
 		};
 };

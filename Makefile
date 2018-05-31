@@ -6,7 +6,7 @@
 #    By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/26 15:41:19 by anestor           #+#    #+#              #
-#    Updated: 2018/05/30 21:28:47 by anestor          ###   ########.fr        #
+#    Updated: 2018/05/31 20:24:58 by anestor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SOURCES =   main.cpp \
 			COperand.cpp \
 			VmExceptions.cpp \
 			Lexer.cpp \
+			Parser.cpp \
 #			Int8.cpp \
 
 

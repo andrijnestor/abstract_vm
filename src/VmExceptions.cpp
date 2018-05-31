@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:24:20 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/30 18:31:39 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 20:44:27 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,11 @@ VmExceptions::WrongValueType::~WrongValueType(void) throw() {}
 const char*		VmExceptions::WrongValueType::what(void) const throw()
 {
 	return ("Wrong value type");
+}
+
+VmExceptions::WrongFile::~WrongFile(void) throw() {}
+
+const char*		VmExceptions::WrongFile::what(void) const throw()
+{
+	return (std::strerror(errno));
 }
