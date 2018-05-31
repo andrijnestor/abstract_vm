@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 16:33:18 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/31 03:07:59 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 17:50:03 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 Machine::Machine(void)
 {
 
+}
+
+Machine::Machine(std::string const & file)
+{
+	this->_fileLexer(file);
 }
 
 Machine::~Machine(void)
@@ -91,8 +96,34 @@ void			Machine::dumpStack(void)
 		std::cout << this->_stack[i]->toString() << std::endl; //not type
 
 
-
+/*
 	Lexer	a;
 
-	a.lexicalAnalysis("pop    Int8( 123.123   )) ;1231");
+	Tokens v = a.lexicalAnalysis("assert absasd(   123. 123) ;asdasd", 1);
+	Tokens s = a.lexicalAnalysis(";; ;asdasd", 1);
+	std::cout << s.line << " " << s.inst << " " << s.type << " " << s.value << " " << s.lexical << std::endl;
+	this->_data.push_back(a.lexicalAnalysis("   pop  ;asdasd ", 1));
+*/
+}
+
+void			Machine::_fileLexer(std::string const & file)
+{
+	std::string		line;
+	std::ifstream	fs(file);
+	size_t			n = 1;
+
+	if (fs.is_open())
+	{
+		while (getline(fs, line))
+		{
+			this->_data.push_back(this->_lexer.lexicalAnalysis(line, n++));
+//			ss << _lexer.validateLine(line) << std::endl;
+		}
+		fs.close();
+	}
+	else
+	{
+//		throw (VmExceptions());
+	}
+
 }

@@ -6,16 +6,17 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 15:42:37 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/30 22:51:28 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 17:50:02 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACHINE_HPP
 # define MACHINE_HPP
 # include <vector>
+# include <fstream>
 # include "Operand.hpp"
 # include "Lexer.hpp"
-//# include "VmExceptions.hpp"
+# include "VmExceptions.hpp"
 /*
 struct									Tokens
 {
@@ -30,7 +31,7 @@ class									Machine
 {
 	public:
 		Machine(void);
-//		Machine(std::string file);
+		Machine(std::string const & file);
 		Machine(Machine const & src);
 		~Machine(void);
 		Machine							&operator=(Machine const & src);
@@ -41,6 +42,9 @@ class									Machine
 	private:
 		std::vector<Tokens>				_data;
 		std::vector<const IOperand *>	_stack;   //ioperland
+		Lexer							_lexer;
+	//	void							_stdinLexer(void);
+		void							_fileLexer(std::string const & file);
 
 };
 

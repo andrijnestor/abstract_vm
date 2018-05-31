@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 21:21:58 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/31 03:09:05 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 17:36:07 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 Lexer::Lexer(void)
 {
-	this->_regex.assign(R"(^\s*\S+((\s*|\s+;.*)$|\s+\S+\(.*)(\s*|\s+;.*)$)|^;.*$)");
+	this->_instr.assign(R"(^\s*(pop|dump|add|sub|mul|div|mod|print|exit)(\s*|\s+;.*)$)");
+	/// /check please for space befor comment
+	this->_instrNvalue.assign(R"(^\s*(push|assert)\s+\w+\(.+\)(\s*|\s+;.*)$)");
+	this->_empty.assign(R"(^(\s*|\s*;.*)$)");
 }
 
 Lexer::~Lexer(void) {}
@@ -28,25 +31,46 @@ Lexer				&Lexer::operator=(Lexer const & src)
 {
 	if (this != &src)
 	{
-		this->_data = src._data;
-		this->_regex = src._regex;
+		this->_line = src._line;
+		this->_tokens = src._tokens;
+		this->_instr = src._instr;
+		this->_instrNvalue = src._instrNvalue;
+		this->_empty = src._empty;
 	}
 	return (*this);
 }
 
-std::vector<Tokens>	Lexer::lexicalAnalysis(std::string const & file)
+Tokens				Lexer::lexicalAnalysis(std::string const & line, int lineN)
 {
-	std::vector<Tokens>	vector;
-//	Tokens				tokens;
-
-	if (std::regex_match(file, this->_regex))
-		std::cout << "hello there!" << std::endl;
+	this->_line = line;
+	this->_tokens.line = lineN;
+/*
+	if (std::regex_match(file, this->_instr))
+		std::cout << "instr" << std::endl;
 	else
-		std::cout << "I am here!" << std::endl;
+		std::cout << "no instr" << std::endl;
 
+	if (std::regex_match(file, this->_instrNvalue))
+		std::cout << "instr value" << std::endl;
+	else
+		std::cout << "no instr value" << std::endl;
+	if (std::regex_match(file, this->_empty))
+		std::cout << "empty" << std::endl;
+	else
+		std::cout << "no empty" << std::endl;
+*/
+	if (std::regex_match(line, this->_instr))
+		return (this->_singleInstruction());
+	else if (std::regex_match(line, this->_instrNvalue))
+		return (this->_instructionWithValue());
+	else if (std::regex_match(line, this->_empty))
+		return (this->_emptyLine());
+	else
+		return (this->_lexicalError());
 
-
-
+	
+	
+/*
 //   std::regex words_regex("[^\\s]+");
    
     std::regex words_regex(R"([(]+.*[)]+)");
@@ -79,6 +103,48 @@ std::vector<Tokens>	Lexer::lexicalAnalysis(std::string const & file)
 	std::regex_search(file, m, std::regex(R"(\s\S+[(])"));
 	test = m.str().substr(1, m.str().size() - 2);
 	std::cout << "supertest: " << test << std::endl;
-
-	return (vector);
+*/
 }
+
+Tokens				Lexer::_singleInstruction(void)
+{
+	std::smatch	m;
+	std::regex_search(this->_line, m, std::regex(R"(\w+)"));
+	this->_tokens.inst = m.str();
+	this->_tokens.type = "Null";
+	this->_tokens.value = "Null";
+	return (this->_tokens);
+}
+
+Tokens				Lexer::_instructionWithValue(void)
+{
+	std::smatch	m;
+	std::regex_search(this->_line, m, std::regex(R"(\w+)"));
+	this->_tokens.inst = m.str();
+	std::regex_search(this->_line, m, std::regex(R"(\w+\()"));
+	this->_tokens.type = m.str().substr(0, m.str().size() - 1);
+	std::regex_search(this->_line, m, std::regex(R"(\(.*\))"));
+	this->_tokens.value = m.str().substr(1, m.str().size() - 2);
+	return (this->_tokens);
+}
+
+Tokens				Lexer::_emptyLine(void)
+{
+	this->_tokens.inst = "Null";
+	this->_tokens.type = "Null";
+	this->_tokens.value = "Null";
+	this->_tokens.lexical = false;
+	return (this->_tokens);
+}
+
+Tokens				Lexer::_lexicalError(void)
+{
+	std::smatch	m;
+	std::regex_search(this->_line, m, std::regex(R"(\w+)"));
+	this->_tokens.inst = m.str();
+	this->_tokens.type = "Null";
+	this->_tokens.value = "Null";
+	this->_tokens.lexical = true;
+	return (this->_tokens);
+}
+

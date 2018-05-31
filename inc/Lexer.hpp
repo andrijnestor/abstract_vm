@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 18:47:02 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/30 22:51:30 by anestor          ###   ########.fr       */
+/*   Updated: 2018/05/31 17:50:05 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 # include <regex>
 # include <iostream>
 
-struct									Tokens
+struct							Tokens
 {
-	int									line;
-	std::string							inst;
-	std::string							type;
-	std::string							value;
-	bool								lexical;  //if wrong n of tokens or different random cymbols
+	int							line;
+	std::string					inst;
+	std::string					type;
+	std::string					value;
+	bool						lexical;
 };
 
 class							Lexer
@@ -31,15 +31,18 @@ class							Lexer
 		~Lexer(void);
 		Lexer(Lexer const & src);
 		Lexer					&operator=(Lexer const & src);
-		std::vector<Tokens>		lexicalAnalysis(std::string const & file);
-	//	void					setLine(void);
-	//	void					setInst(void);
-	//	void					setValue(void);
-	//	void					setError(void);
+		Tokens					lexicalAnalysis(std::string const & line, int lineN);
 
 	private:
-		Tokens					_data;
-		std::regex				_regex;
+		Tokens					_singleInstruction(void);
+		Tokens					_instructionWithValue(void);
+		Tokens					_emptyLine(void);
+		Tokens					_lexicalError(void);
+		Tokens					_tokens;
+		std::string				_line;
+		std::regex				_instr;
+		std::regex				_instrNvalue;
+		std::regex				_empty;
 };
 
 #endif
