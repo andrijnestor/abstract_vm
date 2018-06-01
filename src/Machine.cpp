@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 16:33:18 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/31 20:46:40 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/01 00:41:30 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ Machine::Machine(std::string const & file)
 	{
 		this->_fileLexer(file);
 		this->dumpTokens();
+		Tokens	test;
+		this->_parser.parseTokens(test);
 	}
 	catch (std::exception &e)
 	{
-		std::cout << e.what() << std::endl; //// wtf is here?
+		std::cout << e.what() << "asdasd" << std::endl; //// wtf is here?
 	}
+//	Tokens	test;
+//	this->_parser.parseTokens(test);
 }
 
 Machine::~Machine(void)
@@ -126,7 +130,7 @@ void			Machine::_tokensParser(void)
 {
 	for (auto it = this->_data.begin(); it != this->_data.end(); it++)
 	{
-		
+	//	this->_parser.parseTokens(*it);
 	}
 }
 
