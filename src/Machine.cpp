@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 16:33:18 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/04 20:10:02 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/04 23:30:17 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void			Machine::_iAdd(IOperand const *)
 		this->_stack.pop_back();
 		try
 		{
-			this->_stack.push_back(*one + *two);
+			this->_stack.push_back(*two + *one);
 		}
 		catch (std::exception &e)
 		{
@@ -251,7 +251,7 @@ void			Machine::_iSub(IOperand const *)
 		this->_stack.pop_back();
 		try
 		{
-			this->_stack.push_back(*one - *two);
+			this->_stack.push_back(*two - *one);
 		}
 		catch (std::exception &e)
 		{
@@ -277,7 +277,7 @@ void			Machine::_iMul(IOperand const *)
 		this->_stack.pop_back();
 		try
 		{
-			this->_stack.push_back(*one * *two);
+			this->_stack.push_back(*two * *one);
 		}
 		catch (std::exception &e)
 		{
@@ -304,7 +304,7 @@ void			Machine::_iDiv(IOperand const *)
 		this->_stack.pop_back();
 		try
 		{
-			this->_stack.push_back(*one / *two);
+			this->_stack.push_back(*two / *one);
 		}
 		catch (std::exception &e)
 		{
@@ -331,7 +331,7 @@ void			Machine::_iMod(IOperand const *)
 		this->_stack.pop_back();
 		try
 		{
-			this->_stack.push_back(*one % *two);
+			this->_stack.push_back(*two % *one);
 		}
 		catch (std::exception &e)
 		{
