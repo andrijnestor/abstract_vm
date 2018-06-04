@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:18:58 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/31 20:44:54 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/04 19:27:36 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ class						VmExceptions : public std::exception
 				virtual ~EmptyStack(void) throw();
 				virtual const char	*what() const throw();
 		};
+		class				NoExitFault : public std::exception
+		{
+			public:
+				virtual ~NoExitFault(void) throw();
+				virtual const char	*what() const throw();
+		};
 		class				ExitFault : public std::exception
 		{
 			public:
@@ -85,6 +91,12 @@ class						VmExceptions : public std::exception
 		{
 			public:
 				virtual ~StackLessTwo(void) throw();
+				virtual const char	*what() const throw();
+		};
+		class				WrongTypeName : public std::exception
+		{
+			public:
+				virtual ~WrongTypeName(void) throw();
 				virtual const char	*what() const throw();
 		};
 		class				WrongValueType : public std::exception

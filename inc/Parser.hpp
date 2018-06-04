@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 20:12:27 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/01 00:37:00 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/04 18:43:53 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <iostream>
 # include "Lexer.hpp"
 # include "VmExceptions.hpp"
+# include "Operand.hpp"
 
 class							Parser
 {
@@ -24,14 +25,18 @@ class							Parser
 		~Parser(void);
 		Parser(Parser const & src);
 		Parser					&operator=(Parser const & src);
-		void					parseTokens(Tokens const & data);
+		bool					parseErrors(Tokens const & data);
+		IOperand const *		returnOperand(Tokens const & data);
 
 	private:
-		void					_lexicalError(void);
+		std::map<std::string, eOperandType>	_type;
+		COperand				_creator;
+		void					_mapType(void);
+		void					_lexicalError(bool lexical);
 		void					_syntacticError(void);
-		void					_instrName(void);
-		void					_typeName(void);
-		void					_validValue(void);
+		void					_instName(std::string const & inst);
+		void					_typeName(std::string const & type);
+		void					_validValue(std::string const & value, std::string const & type);
 		void					_exit(void);////?????
 		
 };

@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:24:20 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/31 20:44:27 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/04 19:29:41 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,18 @@ const char*		VmExceptions::EmptyStack::what(void) const throw()
 	return ("Pop on an empty stack");
 }
 
+VmExceptions::NoExitFault::~NoExitFault(void) throw() {}
+
+const char*		VmExceptions::NoExitFault::what(void) const throw()
+{
+	return ("The program doesn’t have an exit instruction");
+}
+
 VmExceptions::ExitFault::~ExitFault(void) throw() {}
 
 const char*		VmExceptions::ExitFault::what(void) const throw()
 {
-	return ("The program doesn’t have an exit instruction");
+	return ("Instruction after exit");
 }
 
 VmExceptions::AssertFault::~AssertFault(void) throw() {}
@@ -93,8 +100,14 @@ VmExceptions::StackLessTwo::~StackLessTwo(void) throw() {}
 
 const char*		VmExceptions::StackLessTwo::what(void) const throw()
 {
-	return ("The stack is composed of strictly less that \
-			two values when an arithmetic instruction is executed");
+	return ("The stack is composed of strictly less that two values when an arithmetic instruction is executed");
+}
+
+VmExceptions::WrongTypeName::~WrongTypeName(void) throw() {}
+
+const char*		VmExceptions::WrongTypeName::what(void) const throw()
+{
+	return ("Wrong type name");
 }
 
 VmExceptions::WrongValueType::~WrongValueType(void) throw() {}
