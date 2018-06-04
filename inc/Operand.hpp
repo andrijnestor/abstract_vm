@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:51:46 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/04 23:30:16 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 00:28:29 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ class							Operand : public IOperand
 				this->_value = static_cast<T>(temp_val);
 				this->_type = type;
 				this->_precision = precision;
-				temp /*<< std::fixed*/ << std::setprecision(precision) << static_cast<T>(temp_val);
+				if (precision == 0)
+					temp << std::setprecision(precision) << static_cast<int>(temp_val);
+				else
+					temp /*<< std::fixed*/ << std::setprecision(precision) << static_cast<double>(temp_val);
 				this->_str = temp.str();
 	//			std::cout << "constr " << this->_str << " " << value <<  std::endl; ///
 			}
