@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 16:33:18 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/05 17:35:18 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 22:41:22 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ Machine::Machine(std::string const & file)
 	{
 		this->_makeRunMap();
 		this->_fileLexer(file);
-//		this->dumpTokens();
+		this->dumpTokens();
 		this->_tokensParser();
 	}
 	catch (std::exception &e)
@@ -94,6 +94,10 @@ void			Machine::_makeRunMap(void)
 	_run.insert(mp("mod", &Machine::_iMod));
 	_run.insert(mp("print", &Machine::_iPrint));
 	_run.insert(mp("exit", &Machine::_iExit));
+	_run.insert(mp("max", &Machine::_iMax));
+	_run.insert(mp("min", &Machine::_iMin));
+	_run.insert(mp("pow", &Machine::_iPow));
+	_run.insert(mp("avg", &Machine::_iAvg));
 }
 
 void			Machine::dumpTokens(void)
@@ -339,12 +343,123 @@ void			Machine::_iMod(IOperand const *)
 	}
 }
 
+
+void			Machine::_iMax(IOperand const *)
+{
+	if (this->_stack.size() < 2)
+		throw (VmExceptions::StackLessTwo());
+	else
+	{
+		IOperand const *one = this->_stack.back();
+		this->_stack.pop_back();
+		IOperand const *two = this->_stack.back();
+		this->_stack.pop_back();
+		if (std::stod((*two).toString()) > std::stod(((*one).toString())))
+		{
+			delete one;
+			this->_stack.push_back(two);
+		}
+		else
+		{
+			delete two;
+			this->_stack.push_back(one);
+		}
+	}
+}
+
+void			Machine::_iMin(IOperand const *)
+{
+	if (this->_stack.size() < 2)
+		throw (VmExceptions::StackLessTwo());
+	else
+	{
+		IOperand const *one = this->_stack.back();
+		this->_stack.pop_back();
+		IOperand const *two = this->_stack.back();
+		this->_stack.pop_back();
+		if (std::stod((*two).toString()) < std::stod(((*one).toString())))
+		{
+			delete one;
+			this->_stack.push_back(two);
+		}
+		else
+		{
+			delete two;
+			this->_stack.push_back(one);
+		}
+	}
+}
+
+
+void			Machine::_iPow(IOperand const *)
+{
+	if (this->_stack.size() < 2)
+		throw (VmExceptions::StackLessTwo());
+	else
+	{
+		IOperand const *one = this->_stack.back();
+		this->_stack.pop_back();
+		IOperand const *two = this->_stack.back();
+		this->_stack.pop_back();
+		try
+		{
+			eOperandType	type =
+				(*two).getType() > (*one).getType() ? (*two).getType() : (*one).getType();
+			std::string		value =
+				std::to_string(std::pow(std::stod((*two).toString()), std::stod((*one).toString())));
+			this->_stack.push_back(this->_creator.createOperand(type, value));
+		}
+		catch (std::exception &e)
+		{
+			this->_stack.push_back(two);
+			this->_stack.push_back(one);
+			throw ;
+		}
+		delete one;
+		delete two;
+	}
+}
+
+void			Machine::_iAvg(IOperand const *)
+{
+	if (this->_stack.size() < 2)
+		throw (VmExceptions::StackLessTwo());
+	else
+	{
+		IOperand const *one = this->_stack.back();
+		this->_stack.pop_back();
+		IOperand const *two = this->_stack.back();
+		this->_stack.pop_back();
+		try
+		{
+			eOperandType	type =
+				(*two).getType() > (*one).getType() ? (*two).getType() : (*one).getType();
+			std::string		value =
+				std::to_string((std::stod((*two).toString()) + std::stod((*one).toString())) / 2);
+			this->_stack.push_back(this->_creator.createOperand(type, value));
+		}
+		catch (std::exception &e)
+		{
+			this->_stack.push_back(two);
+			this->_stack.push_back(one);
+			throw ;
+		}
+		delete one;
+		delete two;
+	}
+}
+
 void			Machine::_iPrint(IOperand const *)
 {
-	if ((this->_stack.back()->getType() != Int8))
-		throw (VmExceptions::AssertFault());
-	auto c = std::stoll(this->_stack.back()->toString());
-	std::cout << static_cast<char>(c);
+	if (this->_stack.size() > 0)
+	{
+		if ((this->_stack.back()->getType() != Int8))
+			throw (VmExceptions::AssertFault());
+		auto c = std::stoll(this->_stack.back()->toString());
+		std::cout << static_cast<char>(c);
+	}
+	else
+		throw (VmExceptions()); // the stack is empty
 }
 
 void			Machine::_iExit(IOperand const *)

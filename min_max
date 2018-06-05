@@ -1,0 +1,11 @@
+push int8(100)
+push int8(123)
+max
+dump
+push int8(90)
+max
+dump
+push int8(100)
+min
+dump
+exit

@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 20:12:27 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/05 17:14:34 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 22:07:25 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ class							Parser
 		void					_lexicalError(bool lexical);
 		void					_instName(std::string const & inst);
 		void					_typeName(std::string const & type);
+		std::string				_instPredictor(std::string const & inst);
+		std::string				_typePredictor(std::string const & type);
+		std::string				_valueExceptor(std::string const & value, std::string const & type);
 		void					_validValue(std::string const & value, std::string const & type);
 };
 

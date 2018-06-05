@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 15:42:37 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/05 17:33:35 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 21:03:58 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ class									Machine
 		void							_iMod(IOperand const *);
 		void							_iPrint(IOperand const *);
 		void							_iExit(IOperand const *);
+		void							_iMax(IOperand const *);
+		void							_iMin(IOperand const *);
+		void							_iPow(IOperand const *);
+		void							_iAvg(IOperand const *);
 		void							_checkExit(void);
 
 };
