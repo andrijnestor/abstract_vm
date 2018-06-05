@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 16:33:18 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/04 23:30:17 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 17:35:18 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ Machine::Machine(void)
 	{
 		this->_makeRunMap();
 		this->_stdinLexer();
-//		this->dumpTokens(); // just for me
+//		this->dumpTokens();
 		this->_tokensParser();
 	}
 	catch (std::exception &e)
 	{
-		std::cout << e.what() << " Machine(void) " << std::endl; //// wtf is here?
+		std::cout << e.what() << std::endl;
 	}
 }
 
@@ -35,12 +35,12 @@ Machine::Machine(std::string const & file)
 	{
 		this->_makeRunMap();
 		this->_fileLexer(file);
-//		this->dumpTokens(); // just for me
+//		this->dumpTokens();
 		this->_tokensParser();
 	}
 	catch (std::exception &e)
 	{
-		std::cout << e.what() << " Machine(Machine const & file) " << std::endl; //// wtf is here?
+		std::cout << e.what() << std::endl;
 	}
 }
 
@@ -70,7 +70,11 @@ Machine			&Machine::operator=(Machine const & src)
 	if (this != &src)
 	{
 		this->_data = src._data;
-//		this->_stack = src._stack;   /// no assing
+		this->_stack = src._stack;
+		this->_lexer = src._lexer;
+		this->_parser = src._parser;
+		this->_creator = src._creator;
+		this->_exit = src._exit;
 	}
 	return (*this);
 }
@@ -127,6 +131,7 @@ void			Machine::_fileLexer(std::string const & file)
 	}
 	else
 	{
+		this->_exit = true;
 		throw (VmExceptions::WrongFile());
 	}
 }
@@ -182,19 +187,16 @@ void			Machine::_iPop(IOperand const *)
 	{
 		throw (VmExceptions::EmptyStack());
 	}
-//	std::cout << "pop" << std::endl;
 }
 
 void			Machine::_iPush(IOperand const *value)
 {
 	this->_stack.push_back(value);
-//	std::cout << "push" << std::endl;
 }
 
 void			Machine::_iDump(IOperand const *)
 {
 	this->dumpStack();
-//	std::cout << "dump" << std::endl;
 }
 
 void			Machine::_iAssert(IOperand const *value)
@@ -210,7 +212,6 @@ void			Machine::_iAssert(IOperand const *value)
 		delete value;
 		throw (VmExceptions::AssertFault());
 	}
-//	std::cout << "assert" << std::endl;
 }
 
 void			Machine::_iAdd(IOperand const *)
@@ -236,7 +237,6 @@ void			Machine::_iAdd(IOperand const *)
 		delete one;
 		delete two;
 	}
-//	std::cout << "add" << std::endl;
 }
 
 void			Machine::_iSub(IOperand const *)
@@ -262,7 +262,6 @@ void			Machine::_iSub(IOperand const *)
 		delete one;
 		delete two;
 	}
-//	std::cout << "sub" << std::endl;
 }
 
 void			Machine::_iMul(IOperand const *)
@@ -288,8 +287,6 @@ void			Machine::_iMul(IOperand const *)
 		delete one;
 		delete two;
 	}
-
-//	std::cout << "mul" << std::endl;
 }
 
 void			Machine::_iDiv(IOperand const *)
@@ -315,8 +312,6 @@ void			Machine::_iDiv(IOperand const *)
 		delete one;
 		delete two;
 	}
-
-//	std::cout << "div" << std::endl;
 }
 
 void			Machine::_iMod(IOperand const *)
@@ -342,8 +337,6 @@ void			Machine::_iMod(IOperand const *)
 		delete one;
 		delete two;
 	}
-
-//	std::cout << "mod" << std::endl;
 }
 
 void			Machine::_iPrint(IOperand const *)
@@ -352,13 +345,11 @@ void			Machine::_iPrint(IOperand const *)
 		throw (VmExceptions::AssertFault());
 	auto c = std::stoll(this->_stack.back()->toString());
 	std::cout << static_cast<char>(c);
-//	std::cout << "print" << std::endl;
 }
 
 void			Machine::_iExit(IOperand const *)
 {
 	this->_exit = true;
-//	std::cout << "exit" << std::endl;
 }
 
 void			Machine::_checkExit(void)
@@ -366,56 +357,3 @@ void			Machine::_checkExit(void)
 	if (this->_exit == false)
 		throw (VmExceptions::NoExitFault());
 }
-
-/*
-
-	class Int8	a;
-	class Int8	b;
-	a.setValue(2);
-	b.setValue(3);
-	const IOperand	*s = a + b;
-	std::cout << s->toString() << std::endl;
-	const class Int8	*d = dynamic_cast<const class Int8 *>(a + b);
-	const class Int8	*f = dynamic_cast<const class Int8 *>(s);
-	class Int8	*l = new class Int8;
-	l = const_cast<class Int8 *>(d);
-	class Int8	*p = const_cast<class Int8 *>(d);
-	(void)f;
-	(void)p;
-//	s(*this->_stack[0] + *this->_stack[1]);
-	this->_stack.push_back(l);
-
-	COperand	creator;
-
-//	IOperand	*test = new Operand<int8_t>("40.0", Int8, 0);
-
-	eOperandType	d = Int8;
-	if (d >= 0 && d <= 4)
-		std::cout << "Yes!" << std::endl;
-	try
-	{
-		IOperand	const *test = creator.createOperand(d, "40.9");
-		IOperand	const *test1 = creator.createOperand(Int8, "20");
-//		IOperand	const *test2 = *test + *test1;
-		this->_stack.push_back(*test / *test1);
-		this->_stack.push_back(*test % *test1);
-//		this->_stack.push_back(test2);
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
-
-	for (size_t i = 0; i != this->_stack.size(); i++)
-		std::cout << this->_stack[i]->toString() << std::endl; //not type
-
-
-
-	Lexer	a;
-
-	Tokens v = a.lexicalAnalysis("assert absasd(   123. 123) ;asdasd", 1);
-	Tokens s = a.lexicalAnalysis(";; ;asdasd", 1);
-	std::cout << s.line << " " << s.inst << " " << s.type << " " << s.value << " " << s.lexical << std::endl;
-	this->_data.push_back(a.lexicalAnalysis("   pop  ;asdasd ", 1));
-*/
-

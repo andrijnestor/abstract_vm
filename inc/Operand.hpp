@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:51:46 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/05 00:28:29 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 16:39:30 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ class							Operand : public IOperand
 			try
 			{
 				temp_val = std::stod(value);
-		//		std::cout << "test: " << std::stod(value) << " v: " << temp_val << std::endl;
 				this->checkOverflowUnderflow(temp_val);
 				this->_value = static_cast<T>(temp_val);
 				this->_type = type;
@@ -39,9 +38,8 @@ class							Operand : public IOperand
 				if (precision == 0)
 					temp << std::setprecision(precision) << static_cast<int>(temp_val);
 				else
-					temp /*<< std::fixed*/ << std::setprecision(precision) << static_cast<double>(temp_val);
+					temp << std::setprecision(precision) << temp_val;
 				this->_str = temp.str();
-	//			std::cout << "constr " << this->_str << " " << value <<  std::endl; ///
 			}
 			catch (std::exception &e)
 			{
@@ -126,11 +124,7 @@ class							Operand : public IOperand
 			if (value > std::numeric_limits<T>::max())
 				throw (VmExceptions::Owerflow());
 			if (value < std::numeric_limits<T>::lowest())
-			{
-		//		std::cout << value << std::endl;
-		//		std::cout << std::numeric_limits<T>::min() << std::endl;
 				throw (VmExceptions::Underflow());
-			}
 		}
 
 	private:

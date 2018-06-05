@@ -1,45 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   COperand.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/05 16:51:05 by anestor           #+#    #+#             */
+/*   Updated: 2018/06/05 16:51:25 by anestor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "COperand.hpp"
 #include "Operand.hpp"
 
-COperand::COperand() {
-	typedef std::pair<eOperandType, IOperand const* (COperand::*)(std::string const &v) const> mapEl;
-	_creationMap.insert(mapEl(Int8, &COperand::createInt8));
-	_creationMap.insert(mapEl(Int16, &COperand::createInt16));
-	_creationMap.insert(mapEl(Int32, &COperand::createInt32));
-	_creationMap.insert(mapEl(Float, &COperand::createFloat));
-	_creationMap.insert(mapEl(Double, &COperand::createDouble));
+COperand::COperand()
+{
+	typedef std::pair<eOperandType, IOperand const* (COperand::*)(std::string const &v) const> mp;
+
+	_mp.insert(mp(Int8, &COperand::createInt8));
+	_mp.insert(mp(Int16, &COperand::createInt16));
+	_mp.insert(mp(Int32, &COperand::createInt32));
+	_mp.insert(mp(Float, &COperand::createFloat));
+	_mp.insert(mp(Double, &COperand::createDouble));
 }
 
-COperand::COperand(COperand const &r){
-	static_cast<void>(r);
+COperand::COperand(COperand const & src)
+{
+	*this = src;
 }
 
-COperand &COperand::operator=(COperand const &r){
-	static_cast<void>(r);
-	return *this;
-}
-COperand::~COperand(){
-
-}
-
-IOperand const *COperand::createOperand(eOperandType const &t, std::string val) const {
-	auto f = _creationMap.at(t);
-	return ((*this.*f)(val));
+COperand &COperand::operator=(COperand const &src)
+{
+	if (this != &src)
+	{
+		this->_mp = src._mp;
+	}
+	return (*this);
 }
 
-IOperand const *COperand::createInt8(std::string const &v) const {
-	return new Operand<int8_t>(v, Int8, int8Precision);
+COperand::~COperand() {}
+
+IOperand const *COperand::createOperand(eOperandType const & type, std::string value) const
+{
+	auto func = _mp.at(type);
+	return ((*this.*func)(value));
 }
-IOperand const *COperand::createInt16(std::string const &v) const {
-	return new Operand<int16_t>(v, Int16, int16Precision);
+
+IOperand const *COperand::createInt8(std::string const & value) const
+{
+	return (new Operand<int8_t>(value, Int8, 0));
 }
-IOperand const *COperand::createInt32(std::string const &v) const {
-	return new Operand<int32_t>(v, Int32, int32Precision);
+
+IOperand const *COperand::createInt16(std::string const & value) const
+{
+	return (new Operand<int16_t>(value, Int16, 0));
 }
-IOperand const *COperand::createFloat(std::string const &v) const {
-	return new Operand<float>(v, Float, floatPrecision);
+
+IOperand const *COperand::createInt32(std::string const & value) const
+{
+	return (new Operand<int32_t>(value, Int32, 0));
 }
-IOperand const *COperand::createDouble(std::string const &v) const {
-	return new Operand<double>(v, Double, doublePrecision);
+
+IOperand const *COperand::createFloat(std::string const & value) const
+{
+	return (new Operand<float>(value, Float, 7));
+}
+
+IOperand const *COperand::createDouble(std::string const & value) const
+{
+	return (new Operand<double>(value, Double, 15));
 }

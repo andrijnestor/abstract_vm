@@ -6,13 +6,13 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 21:21:58 by anestor           #+#    #+#             */
-/*   Updated: 2018/05/31 18:52:38 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 17:31:24 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lexer.hpp"
 
-Lexer::Lexer(void) 	/// /check for space before comment
+Lexer::Lexer(void)
 {
 	this->_instr.assign(R"(^\s*(pop|dump|add|sub|mul|div|mod|print|exit)(\s*|\s+;.*)$)");
 	this->_instrNvalue.assign(R"(^\s*(push|assert)\s+\w+\(.+\)(\s*|\s+;.*)$)");
@@ -51,41 +51,6 @@ Tokens				Lexer::lexicalAnalysis(std::string const & line, int lineN)
 		return (this->_emptyLine());
 	else
 		return (this->_lexicalError());
-
-/*
-//   std::regex words_regex("[^\\s]+");
-   
-    std::regex words_regex(R"([(]+.*[)]+)");
-
-   // std::regex words_regex(R"([^ ]+)");
-   	auto words_begin =
-        std::sregex_iterator(file.begin(), file.end(), words_regex);
-    auto words_end = std::sregex_iterator();
-
-    std::cout << "Found "
-              << std::distance(words_begin, words_end)
-              << " words:\n";
-
-    for (std::sregex_iterator i = words_begin; i != words_end; ++i) {
-        std::smatch match = *i;
-        std::string match_str = match.str();
-        std::cout << match_str << '\n';
-    }
-	
-	std::smatch	m;
-	std::regex_search(file, m, std::regex(R"(\(.*\))"));
-	std::string	test = m.str().substr(1, m.str().size() - 2);
-	std::cout << "supertest: " << test << std::endl;
-
-
-	std::regex_search(file, m, std::regex(R"(^\s*\S+\s*)"));
-	test = m.str().substr(0, m.str().size());
-	std::cout << "supertest: " << test << std::endl;
-
-	std::regex_search(file, m, std::regex(R"(\s\S+[(])"));
-	test = m.str().substr(1, m.str().size() - 2);
-	std::cout << "supertest: " << test << std::endl;
-*/
 }
 
 Tokens				Lexer::_singleInstruction(void)

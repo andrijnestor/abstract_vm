@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 20:23:32 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/04 20:08:48 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 17:14:33 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ Parser				&Parser::operator=(Parser const & src)
 {
 	if (this != &src)
 	{
-		///
+		this->_type = src._type;
+		this->_creator = src._creator;
 	}
 	return (*this);
 }
@@ -116,11 +117,6 @@ void				Parser::_lexicalError(bool lexical)
 {
 	if (lexical == true)
 		throw (VmExceptions::LexicalError());
-}
-
-void				Parser::_syntacticError(void)
-{
-	throw VmExceptions::SyntacticError();
 }
 
 void				Parser::_typeName(std::string const & type)

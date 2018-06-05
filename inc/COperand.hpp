@@ -1,32 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   COperand.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/05 16:51:14 by anestor           #+#    #+#             */
+/*   Updated: 2018/06/05 16:51:26 by anestor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef COPERAND_HPP
-#define COPERAND_HPP
-#include "IOperand.hpp"
-#include <map>
+# define COPERAND_HPP
+# include "IOperand.hpp"
+# include <map>
 
-enum ePrecision {
-	int8Precision=0,
-	int16Precision=0,
-	int32Precision=0,
-	floatPrecision=7,
-	doublePrecision=14,
+class							COperand
+{
+	public:
+		COperand();
+		COperand(COperand const & src);
+		virtual ~COperand();
+		COperand				&operator=(COperand const & src);
+		IOperand const 			*createOperand(eOperandType const & type, std::string value) const;
+
+	private:
+		IOperand const			*createInt8(std::string const & value) const;
+		IOperand const			*createInt16(std::string const & value) const;
+		IOperand const			*createInt32(std::string const & value) const;
+		IOperand const			*createFloat(std::string const & value) const;
+		IOperand const			*createDouble(std::string const & value) const;
+		std::map<eOperandType, IOperand const* (COperand::*)(std::string const & value) const> _mp;
 };
-
-class COperand {
-public:
-	COperand();
-	COperand(COperand const &);
-	COperand &operator=(COperand const &);
-	virtual ~COperand();
-	IOperand const *createOperand(eOperandType const &t, std::string val) const;
-private:
-	IOperand const *createInt8(std::string const &v) const;
-	IOperand const *createInt16(std::string const &v) const;
-	IOperand const *createInt32(std::string const &v) const;
-	IOperand const *createFloat(std::string const &v) const;
-	IOperand const *createDouble(std::string const &v) const;
-	std::map<eOperandType, IOperand const* (COperand::*)(std::string const &v) const> _creationMap;
-};
-
-
 
 #endif
