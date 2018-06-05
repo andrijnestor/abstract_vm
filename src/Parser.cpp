@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 20:23:32 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/05 22:29:51 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/06 00:06:39 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ bool				Parser::parseErrors(Tokens const & data)
 	{
 		clean = false;
 		if (data.inst != "Null")
-			std::cout	<< "Line " << data.line << ": Syntax error: " <<  e.what()
-						<< _instPredictor(data.inst) << std::endl;
+			std::cout	<< "Line " << data.line << ": Syntax error: " << e.what()
+						<< std::endl;
 	}
 	try
 	{
@@ -141,54 +141,18 @@ void				Parser::_instName(std::string const & inst)
 		throw (VmExceptions::UnknownInstruction());
 }
 
-std::string			Parser::_instPredictor(std::string const & inst)
-{
-	if (std::regex_match(inst, std::regex(R"(^p.*p$)")))
-		return ("; did you mean 'pop'?");
-	else if (std::regex_match(inst, std::regex(R"(^d.*p$)")))
-		return ("; did you mean 'dump'?");
-	else if (std::regex_match(inst, std::regex(R"(^a.*d$)")))
-		return ("; did you mean 'add'?");
-	else if (std::regex_match(inst, std::regex(R"(^s.*b$)")))
-		return ("; did you mean 'sub'?");
-	else if (std::regex_match(inst, std::regex(R"(^m.*l$)")))
-		return ("; did you mean 'mul'?");
-	else if (std::regex_match(inst, std::regex(R"(^d.*v$)")))
-		return ("; did you mean 'div'?");
-	else if (std::regex_match(inst, std::regex(R"(^m.*d$)")))
-		return ("; did you mean 'mod'?");
-	else if (std::regex_match(inst, std::regex(R"(^p.*t$)")))
-		return ("; did you mean 'print'?");
-	else if (std::regex_match(inst, std::regex(R"(^e.*t$)")))
-		return ("; did you mean 'exit'?");
-	else if (std::regex_match(inst, std::regex(R"(^m.*x$)")))
-		return ("; did you mean 'max'?");
-	else if (std::regex_match(inst, std::regex(R"(^m.*n$)")))
-		return ("; did you mean 'min'?");
-	else if (std::regex_match(inst, std::regex(R"(^a.*g$)")))
-		return ("; did you mean 'avg'?");
-	else if (std::regex_match(inst, std::regex(R"(^p.*w$)")))
-		return ("; did you mean 'pow'?");
-	else if (std::regex_match(inst, std::regex(R"(^p.*h$)")))
-		return ("; did you mean 'push'?");
-	else if (std::regex_match(inst, std::regex(R"(^a.*t$)")))
-		return ("; did you mean 'assert'?");
-	else
-		return ("");
-}
-
 std::string			Parser::_typePredictor(std::string const & type)
 {
-	if (std::regex_match(type, std::regex(R"(^.*8$)")))
-		return ("; did you mean 'int8'?");
-	else if (std::regex_match(type, std::regex(R"(^.*6$)")))
-		return ("; did you mean 'int16'?");
-	else if (std::regex_match(type, std::regex(R"(^.*2$)")))
-		return ("; did you mean 'int32'?");
-	else if (std::regex_match(type, std::regex(R"(^f.*$)")))
-		return ("; did you mean 'float'?");
-	else if (std::regex_match(type, std::regex(R"(^d.*$)")))
-		return ("; did you mean 'double'?");
+	if (std::regex_match(type, std::regex(R"(^.*8.*$)")))
+		return ("; did you mean '\033[96mint8\033[0m'?");
+	else if (std::regex_match(type, std::regex(R"(^.*(1|6).*$)")))
+		return ("; did you mean '\033[96mint16\033[0m'?");
+	else if (std::regex_match(type, std::regex(R"(^.*(3|2).*$)")))
+		return ("; did you mean '\033[96mint32\033[0m'?");
+	else if (std::regex_match(type, std::regex(R"(^.*(f|l|a).*$)")))
+		return ("; did you mean '\033[96mfloat\033[0m'?");
+	else if (std::regex_match(type, std::regex(R"(^.*(d|u|b|e).*$)")))
+		return ("; did you mean '\033[96mdouble\033[0m'?");
 	else
 		return ("");
 }

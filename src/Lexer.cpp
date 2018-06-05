@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 21:21:58 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/05 22:43:51 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/05 23:43:25 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 Lexer::Lexer(void)
 {
-	this->_instr.assign(R"(^\s*(p.*p|d.*p|a.*d|s.*b|m.*l|d.*v|m.*d|p.*t|e.*t|m.*x|m.*n|a.*g|p.*w)(\s*|\s+;.*)$)");
-	this->_instrNvalue.assign(R"(^\s*(p.*h|a.*t)\s+\w+\(.+\)(\s*|\s+;.*)$)");
+	this->_instr.assign(R"(^\s*(pop|dump|add|sub|mul|div|mod|print|exit|max|min|avg|pow)(\s*|\s+;.*)$)");
+	this->_instrNvalue.assign(R"(^\s*(push|assert)\s+\w+\(.+\)(\s*|\s+;.*)$)");
 	this->_empty.assign(R"(^(\s*|\s*;.*)$)");
 }
 

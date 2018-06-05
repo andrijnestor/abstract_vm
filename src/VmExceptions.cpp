@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:24:20 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/05 17:07:40 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/06 00:06:41 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ VmExceptions::EmptyStack::~EmptyStack(void) throw() {}
 const char*		VmExceptions::EmptyStack::what(void) const throw()
 {
 	return ("\033[91mPop on an empty stack\033[0m");
+}
+
+VmExceptions::PrintEmptyStack::~PrintEmptyStack(void) throw() {}
+
+const char*		VmExceptions::PrintEmptyStack::what(void) const throw()
+{
+	return ("\033[91mPrint on an empty stack\033[0m");
 }
 
 VmExceptions::NoExitFault::~NoExitFault(void) throw() {}

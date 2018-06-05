@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:18:58 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/04 19:27:36 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/06 00:06:42 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ class						VmExceptions : public std::exception
 		{
 			public:
 				virtual ~EmptyStack(void) throw();
+				virtual const char	*what() const throw();
+		};
+		class				PrintEmptyStack : public std::exception
+		{
+			public:
+				virtual ~PrintEmptyStack(void) throw();
 				virtual const char	*what() const throw();
 		};
 		class				NoExitFault : public std::exception

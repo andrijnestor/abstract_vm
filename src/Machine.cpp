@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 16:33:18 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/05 22:41:22 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/06 00:01:08 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ Machine::Machine(std::string const & file)
 	{
 		this->_makeRunMap();
 		this->_fileLexer(file);
-		this->dumpTokens();
+	//	this->dumpTokens();
 		this->_tokensParser();
 	}
 	catch (std::exception &e)
@@ -173,7 +173,7 @@ void			Machine::_tokensParser(void)
 		}
 		catch (std::exception &e)
 		{
-			std::cout << "line " << line << ": " << e.what() << std::endl;
+			std::cout << "Line " << line << ": " << e.what() << std::endl;
 		}
 	}
 }
@@ -459,7 +459,7 @@ void			Machine::_iPrint(IOperand const *)
 		std::cout << static_cast<char>(c);
 	}
 	else
-		throw (VmExceptions()); // the stack is empty
+		throw (VmExceptions::PrintEmptyStack());
 }
 
 void			Machine::_iExit(IOperand const *)
