@@ -1,0 +1,8 @@
+push int8(23)
+push int16(24)
+max
+dump
+push int32(23)
+min
+dump
+exit

@@ -1,0 +1,5 @@
+push float(23.23)
+push double(23.23)
+add
+dump
+exit

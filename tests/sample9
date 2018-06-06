@@ -1,0 +1,7 @@
+push int8(123d)
+push int8(123.23)
+push float(23.23s)
+push float(-12.12))
+push double(123.asd)
+push float(23)
+exit

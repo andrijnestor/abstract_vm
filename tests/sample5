@@ -1,0 +1,4 @@
+push int8(50)
+assert int8(50)
+assert int16(50)
+exit

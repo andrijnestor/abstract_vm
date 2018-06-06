@@ -6,7 +6,7 @@
 /*   By: anestor <anestor@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:24:20 by anestor           #+#    #+#             */
-/*   Updated: 2018/06/06 00:15:00 by anestor          ###   ########.fr       */
+/*   Updated: 2018/06/06 12:12:13 by anestor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,6 @@ const char*		VmExceptions::WrongFile::what(void) const throw()
 {
 	std::string ret("\033[91m");
 	ret += std::strerror(errno);
-	ret += "\033[0";
+	ret += "\033[0m";
 	return (ret.c_str());
 }

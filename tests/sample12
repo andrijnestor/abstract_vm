@@ -1,0 +1,8 @@
+push int8(23)
+push int8(23)
+add
+exit
+push int8(23)
+push int8(23)
+add
+exit

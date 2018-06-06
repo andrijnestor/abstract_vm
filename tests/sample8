@@ -1,0 +1,6 @@
+push in8(13)
+push doub(13.0)
+push loat(13.0)
+push nt2(13)
+push it16(13)
+exit

@@ -1,0 +1,7 @@
+push int32(1000)
+push int32(1000)
+push double(1000)
+div
+mul
+dump
+exit

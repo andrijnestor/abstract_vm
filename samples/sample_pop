@@ -1,0 +1,6 @@
+push int32(42) ;asdasd
+push int32(33)
+pop
+pop
+pop
+exit

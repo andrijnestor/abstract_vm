@@ -1,0 +1,15 @@
+; -------------
+; sample.avm -
+; -------------
+
+push int32(42) ;asdasd
+push int32(33)
+add ;asdasd
+push float(44.55)
+mul
+push double(42.42)
+push i32(42)
+dump
+pop asd
+assert double(42.42)
+exit
